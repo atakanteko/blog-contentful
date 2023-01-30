@@ -1,7 +1,4 @@
-import Head from "next/head";
 import Image from "next/image";
-import { Inter } from "@next/font/google";
-import styles from "@/styles/Home.module.css";
 import {
   createStyles,
   SimpleGrid,
@@ -11,8 +8,7 @@ import {
   Container,
   AspectRatio,
 } from "@mantine/core";
-
-const inter = Inter({ subsets: ["latin"] });
+import { createClient } from "contentful";
 
 const mockdata = [
   {
@@ -57,7 +53,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export default function Home() {
+function Home({ blogs }) {
   const { classes } = useStyles();
 
   const cards = mockdata.map((article) => (
@@ -89,3 +85,19 @@ export default function Home() {
     </Container>
   );
 }
+
+export async function getStaticProps() {
+  const client = createClient({
+    space: process.env.CONTENTFUL_SPACE_ID,
+    accessToken: process.env.CONTENTFUL_ACCESS_KEY,
+  });
+
+  const res = await client.getEntries({ content_type: "blog" });
+  return {
+    props: {
+      blogs: res.items,
+    },
+  };
+}
+
+export default Home;
