@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Card, Text, AspectRatio, createStyles } from "@mantine/core";
+import Link from "next/link";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -21,23 +22,32 @@ const useStyles = createStyles((theme) => ({
 function BlogCard({ item, createdAt }) {
   const { title, thumbnail, slug } = item.fields;
   const { classes } = useStyles();
+
   return (
-    <Card p="md" radius="md" component="a" href="#" className={classes.card}>
-      <AspectRatio ratio={1920 / 1080}>
-        <Image
-          src={`https:${thumbnail.fields.file.url}`}
-          width={425}
-          height={245}
-          alt={title}
-        />
-      </AspectRatio>
-      <Text color="dimmed" size="xs" transform="uppercase" weight={700} mt="md">
-        {createdAt}
-      </Text>
-      <Text className={classes.title} mt={5}>
-        {title}
-      </Text>
-    </Card>
+    <Link href={"/blogs/" + slug}>
+      <Card p="md" radius="md" className={classes.card}>
+        <AspectRatio ratio={1920 / 1080}>
+          <Image
+            src={`https:${thumbnail.fields.file.url}`}
+            width={425}
+            height={245}
+            alt={title}
+          />
+        </AspectRatio>
+        <Text
+          color="dimmed"
+          size="xs"
+          transform="uppercase"
+          weight={700}
+          mt="md"
+        >
+          {createdAt}
+        </Text>
+        <Text className={classes.title} mt={5}>
+          {title}
+        </Text>
+      </Card>
+    </Link>
   );
 }
 
