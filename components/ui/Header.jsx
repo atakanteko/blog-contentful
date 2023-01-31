@@ -3,6 +3,7 @@ import { createStyles, Header, Container, Group, Burger } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Image from "next/legacy/image";
 import Logo from "@/assets/images/logo.png";
+import Link from "next/link";
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -59,20 +60,16 @@ const useStyles = createStyles((theme) => ({
 
 const links = [
   {
+    link: "/",
+    label: "Home",
+  },
+  {
     link: "/about",
-    label: "Features",
+    label: "About",
   },
   {
-    link: "/pricing",
-    label: "Pricing",
-  },
-  {
-    link: "/learn",
-    label: "Learn",
-  },
-  {
-    link: "/community",
-    label: "Community",
+    link: "/contact",
+    label: "Contact",
   },
 ];
 
@@ -82,7 +79,7 @@ export function HeaderSimple() {
   const { classes, cx } = useStyles();
 
   const items = links.map((link) => (
-    <a
+    <Link
       key={link.label}
       href={link.link}
       className={cx(classes.link, {
@@ -94,7 +91,7 @@ export function HeaderSimple() {
       }}
     >
       {link.label}
-    </a>
+    </Link>
   ));
 
   return (
